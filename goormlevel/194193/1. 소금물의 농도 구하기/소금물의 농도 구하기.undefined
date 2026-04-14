@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] input = br.readLine().split(" ");
+		double N = Double.valueOf(input[0]);
+		double M = Double.valueOf(input[1]);
+		// 소금
+		double s = (N * 7.0) / 100.0;
+		// 물
+		double w = N+M;
+		// 농도
+		double result = s/w * 100.0;
+		// 버림
+		result = (int)(result * 100) / 100.0;
+		
+		System.out.println(String.format("%.2f", result));
+	}
+}
