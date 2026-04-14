@@ -1,0 +1,71 @@
+import java.io.*;
+import java.util.*;
+
+class Home{
+	int k;  // 땅 높이 및 물의 양
+	int lm; // 마지막 비
+	Home(int k){
+		this.k = k;
+		lm = -1;
+	}
+}
+	
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] input = br.readLine().split(" ");
+		// N 개의 집
+		// Si 부터 Ei 까지 비옴 (+1)
+		// 배수시스템 3의 배수 and 2일 이내에 비가 내린 곳, 9일이면 9,8,7
+		// 땅 높이는 물 높이와 같아짐
+		
+		int N = Integer.valueOf(input[0]); // 집 cnt
+		int M = Integer.valueOf(input[1]); // 장마 cnt
+
+		ArrayList<Home> homes = new ArrayList<>();
+		for(String s : br.readLine().split(" ")){
+			homes.add(new Home(Integer.valueOf(s)));
+		}
+
+		Queue<Home> day3HomeQ = new LinkedList<>();
+		Queue<Integer> cntQ = new LinkedList<>();
+
+		for(int i=1; i<=M; i++){
+			String[] strArr = br.readLine().split(" ");
+			int start = Integer.valueOf(strArr[0]);
+			int end = Integer.valueOf(strArr[1]);
+			int cnt = 0;
+			// 수위 증가
+			for(int j=start; j<=end; j++){
+				Home home = homes.get(j-1);
+				home.k++;
+				day3HomeQ.offer(home);
+				cnt++;
+			}
+			cntQ.offer(cnt);
+			// 4일차부터 배수 제외 집 제거
+			if(i >= 4){
+				int cntTm = cntQ.poll();
+				for(int j=0; j<cntTm; j++){
+					day3HomeQ.poll();
+				}
+			}
+			// 배수시스템 가동
+			if(i%3 == 0){
+				HashSet<Home> set = new HashSet<>();
+				for(Home home : day3HomeQ){
+					if(set.contains(home)) continue; // 중복은 제거
+					set.add(home);
+					home.k--;
+				}
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for(Home home : homes){
+			sb.append(home.k).append(" ");
+		}
+		
+		System.out.println(sb);
+	}
+}
