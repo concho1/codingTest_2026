@@ -1,0 +1,11 @@
+-- 코드를 입력하세요
+-- 입양간 기록은 있지만 ANIMAL_INS 에 없는 동물 ID 찾기
+-- ANIMAL_OUTS 의 ID 를 기준으로 둠
+SELECT j.OUT_ID AS ANIMAL_ID, j.NAME AS NAME FROM (
+    SELECT ao.ANIMAL_ID AS OUT_ID , ai.ANIMAL_ID AS IN_ID, ao.NAME AS NAME FROM 
+    ANIMAL_OUTS AS ao
+    LEFT OUTER JOIN
+    ANIMAL_INS AS ai
+    ON ao.ANIMAL_ID = ai.ANIMAL_ID
+) AS j
+WHERE j.IN_ID IS NULL;
