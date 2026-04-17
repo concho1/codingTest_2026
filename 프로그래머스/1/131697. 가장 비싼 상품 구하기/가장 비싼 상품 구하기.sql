@@ -1,0 +1,6 @@
+-- 코드를 입력하세요
+-- 판매 중인 상품 중 가장 높은 판매가
+-- 컬럼명은 MAX_PRICE
+SELECT PRICE AS MAX_PRICE FROM PRODUCT 
+ORDER BY PRICE DESC
+LIMIT 1;
