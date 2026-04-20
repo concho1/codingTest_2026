@@ -25,6 +25,7 @@ class Solution {
     }
     
     // start번 마을부터 depth = 누적시간 이 k 이하인 마을들 찾기
+    // 탐색은 BFS와 유사하게, 최소 시간은 DP 로
     static int bfs(int start, int N, int K){
         Queue<Node> q = new LinkedList<>();
         // 해당 마을까지의 최소 시간
@@ -52,7 +53,7 @@ class Solution {
                 q.offer(new Node(adjNum, nDepth));
             }
         }
-        System.out.println(Arrays.toString(minDepth));
+        // System.out.println(Arrays.toString(minDepth));
         int result = 0;
         for(Integer i : minDepth){
             if(i != null && i <= K){
