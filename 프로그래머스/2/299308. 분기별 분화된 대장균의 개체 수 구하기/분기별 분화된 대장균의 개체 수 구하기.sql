@@ -1,0 +1,17 @@
+-- 코드를 작성해주세요
+-- 1. 분기(QUARTER) 구하기
+--    1,2,3, 4,5,6, 7,8,9, 10,11,12
+-- 2. 분기로 그룹화
+-- 3. 대장균 개체의 총 수 출력
+-- 4. 분기에 대해 오름차순
+SELECT (
+    CASE
+        WHEN MONTH(DIFFERENTIATION_DATE) IN (1,2,3) THEN '1Q'
+        WHEN MONTH(DIFFERENTIATION_DATE) IN (4,5,6) THEN '2Q'
+        WHEN MONTH(DIFFERENTIATION_DATE) IN (7,8,9) THEN '3Q'
+        ELSE '4Q'
+    END
+) AS QUARTER , COUNT(ID) AS ECOLI_COUNT
+FROM ECOLI_DATA
+GROUP BY QUARTER
+ORDER BY QUARTER;
