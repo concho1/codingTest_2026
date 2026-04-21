@@ -1,5 +1,9 @@
 import java.util.*;
 
+// 1. 도로 정보를 이용해 최소 소요시간의 도로만 남기고 2D map 형태로 저장
+// 2. BFS 를 이용해 탐색하면서 소요 시간을 누적하면서 탐색
+// 3. 누적시간이 K를 초과하면 해당 case 탐색 종료
+// 4. 결국 BFS 를 통해 탐색된 모든 노드의 누적 소요 시간은 K 이하가 됨
 class Solution {
     static class Node {
         int num;    // 현재 마을 번호
@@ -9,7 +13,7 @@ class Solution {
             this.depth = depth;
         }
     }
-    // 출발 마을 -> 도착 마을 hashMap<넘버, 소요시간>
+    // 출발 마을 -> 도착 마을 hashMap<도착 마을 넘버, 소요시간>
     static HashMap<Integer, HashMap<Integer, Integer>> roadMap = new HashMap<>();
     
     public int solution(int N, int[][] road, int K) {
