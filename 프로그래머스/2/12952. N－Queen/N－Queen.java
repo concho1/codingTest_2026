@@ -5,12 +5,12 @@ class Solution {
     static class Node {
         int y;
         int x;
-        ArrayList<Node> pNodes;
+        Node pn;
         
-        Node(int y, int x, ArrayList<Node> pNodes){
+        Node(int y, int x, Node pn){
             this.y = y;
             this.x = x;
-            this.pNodes = pNodes;
+            this.pn = pn;
         }
     }
     static int n;
@@ -29,15 +29,13 @@ class Solution {
         Queue<Node> q = new LinkedList<>();
         // 시작 노드들 생성
         for(int i=0; i<n; i++){
-            q.offer(new Node(0, i, new ArrayList<Node>()));
+            q.offer(new Node(0, i, null));
         }
         
         while(!q.isEmpty()){
             Node cn = q.poll();
             for(int i=0; i<n; i++){
-                ArrayList<Node> npNodes = (ArrayList<Node>) cn.pNodes.clone();
-                npNodes.add(cn);
-                Node nn = new Node(cn.y+1, i, npNodes);
+                Node nn = new Node(cn.y+1, i, cn);
                 if(isAbleNode(nn)){
                     // 만약 y 가 n-1 이면 끝
                     if(nn.y == (n-1)) re++;
@@ -52,13 +50,16 @@ class Solution {
     static boolean isAbleNode(Node node){
         // 0. y 가 n 이상인지 확인
         if(node.y >= n) return false;
-        for(Node pn : node.pNodes){
+        // 부모 노드들 탐색
+        Node pn = node.pn;
+        while(pn != null){
             // 1. 부모 노드들과 y가 겹치는지 확인
             if(node.y == pn.y) return false;
             // 2. 부모 노드들과 x가 겹치는지 확인
             if(node.x == pn.x) return false;
             // 3. 부모 노드들과 대각에 위치하는지 확인
             if(Math.abs(pn.x-node.x) ==  Math.abs(pn.y-node.y)) return false;
+            pn = pn.pn; // 상위 부모로 이동
         }
         return true;
     }
