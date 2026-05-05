@@ -15,8 +15,9 @@ class Solution {
         }
         // 참여했지만 완주자 명단에 없는 사람 찾기
         for(String person : pMap.keySet()){
-            int cnt = pMap.get(person) - cMap.getOrDefault(person, 0);
-            if(cnt != 0) return person;
+            if(!pMap.get(person).equals(cMap.getOrDefault(person, 0))) {
+                return person;
+            }
         }
         
         return answer;
