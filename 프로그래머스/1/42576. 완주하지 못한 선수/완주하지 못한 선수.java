@@ -2,18 +2,23 @@ import java.util.*;
 
 class Solution {
     public String solution(String[] participant, String[] completion) {
-        HashMap<String, Integer> compMap = new HashMap<>();
-        for(String comp : completion) 
-            compMap.put(comp, compMap.getOrDefault(comp, 0) + 1);
-        // 참가자들을 완주자 cnt 에서 --
-        for(String part : participant){
-            int cnt = compMap.getOrDefault(part, 0);
-            if(--cnt == -1){
-                return part;
-            }else{
-                compMap.put(part, cnt);
-            }
+        String answer = "";
+        // participant 에는 있지만 completion 에는 없는 친구를 찾으면 됨
+        // 동명이인은 주의
+        HashMap<String, Integer> pMap = new HashMap<>();
+        for(String par : participant){
+            pMap.put(par, pMap.getOrDefault(par, 0) + 1);
         }
-        return "";
+        HashMap<String, Integer> cMap = new HashMap<>();
+        for(String com : completion){
+            cMap.put(com, cMap.getOrDefault(com, 0) + 1);
+        }
+        // 참여했지만 완주자 명단에 없는 사람 찾기
+        for(String person : pMap.keySet()){
+            int cnt = pMap.get(person) - cMap.getOrDefault(person, 0);
+            if(cnt != 0) return person;
+        }
+        
+        return answer;
     }
 }
