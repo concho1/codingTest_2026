@@ -1,0 +1,7 @@
+-- 코드를 입력하세요
+
+SELECT COUNT(tm.NAME) AS 'count' FROM (
+    SELECT NAME FROM ANIMAL_INS
+    GROUP BY NAME
+) AS tm
+
